@@ -1,0 +1,12 @@
+{
+  "name": "snapvideo-proxy",
+  "private": true,
+  "version": "1.0.0",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "build": "echo no build",
+    "vercel-build": "echo no build"
+  }
+}
