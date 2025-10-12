@@ -1,44 +1,34 @@
 @echo off
-title YouTube Video Downloader with yt-dlp
-color 0A
+title YouTube / Instagram / TikTok Downloader
+chcp 65001 >nul
 
-:: Set download folder
+:: Set working and output directories
+cd /d C:\yt-dlp
 set "OUTPUT_DIR=%USERPROFILE%\Downloads\Videos"
+set "FFMPEG_PATH=C:\ffmpeg\bin"
 
-:: Add ffmpeg to PATH if needed (if not already set)
-set "FFMPEG_DIR=C:\ffmpeg\bin"
-set "PATH=%FFMPEG_DIR%;%PATH%"
+:: Add FFmpeg to PATH temporarily
+set "PATH=%FFMPEG_PATH%;%PATH%"
 
-:: Check yt-dlp existence
-if not exist yt-dlp.exe (
-    echo yt-dlp.exe not found in current folder.
-    pause
-    exit /b
-)
+:: Display header
+echo.
+echo ================================
+echo    YouTube / Instagram / TikTok Downloader
+echo ================================
+echo.
 
 :loop
-cls
-echo ==========================================
-echo   YouTube / Instagram / TikTok Downloader
-echo ==========================================
+set /p "VIDEO_URL=Paste video URL (or type 'exit' to quit): "
+
+if /i "%VIDEO_URL%"=="exit" goto end
+
 echo.
-
-set /p "URL=Paste video URL (or type 'exit' to quit): "
-
-if /i "%URL%"=="exit" goto end
-
 echo Downloading...
-yt-dlp.exe "%URL%" ^
-  --ffmpeg-location "%FFMPEG_DIR%" ^
-  -o "%OUTPUT_DIR%\%%(title)s.%%(ext)s" ^
-  --merge-output-format mp4
-
+yt-dlp --ffmpeg-location "%FFMPEG_PATH%" -P "%OUTPUT_DIR%" "%VIDEO_URL%"
 echo.
-echo Download finished!
-echo Press any key to continue...
-pause >nul
 goto loop
 
 :end
-echo Exiting...
-exit /b
+echo.
+echo Goodbye!
+pause
